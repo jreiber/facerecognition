@@ -44,13 +44,13 @@ class App extends Component {
     this.state = initState;
   }
 
-  componentDidMount() {
+/*  componentDidMount() {
     fetch('https://afternoon-sierra-22942.herokuapp.com/')
       .then(response => response.json())
       .then(res => {
         console.log('componentDidMount response', res);
       });
-  }
+  }*/
 
   calculateFaceLocation = (data) => {
     const clarifiaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
