@@ -5,14 +5,11 @@ import Logo from './Components/Logo/Logo';
 import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import Rank from './Components/Rank/Rank';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
 import Signin from './Components/Signin/Signin';
 import Register from './Components/Register/Register';
 
-const app = new Clarifai.App({
- apiKey: 'acb0d3cb370749c48d8b681dc7f3b31a'
-});
+
 
 const particlesOptions = {
   particles: {
@@ -48,7 +45,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000')
+    fetch('https://afternoon-sierra-22942.herokuapp.com/')
       .then(response => response.json())
       .then(res => {
         console.log('componentDidMount response', res);
@@ -88,13 +85,17 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageURL: this.state.input});
-    app.models
-      .predict(
-        Clarifai.FACE_DETECT_MODEL,
-        this.state.input)
+      fetch('https://afternoon-sierra-22942.herokuapp.com/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
+      .then(response => response.json())
       .then(response => {
         if(response){
-          fetch('http://localhost:3000/image', {
+          fetch('https://afternoon-sierra-22942.herokuapp.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
